@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Para el amor de mi vida ❤️</title>
+  <meta name="theme-color" content="#ff3366" />
+  <!-- PWA: enlaza el manifiesto (crea el archivo manifest.webmanifest en la misma carpeta) -->
+  <link rel="manifest" href="manifest.webmanifest" />
+  <style>
+    :root{
+      --bg1:#2b0000; --bg2:#800000; --bg3:#ff0033;
+      --accent:#ff3366; --soft:#ffe6eb; --card:#fff9faee; --text:#1f1f1f;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0;font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial; color:#fff;
+      background:linear-gradient(135deg,var(--bg1),var(--bg2),var(--bg3));
+      background-size:300% 300%;animation:bgShift 15s ease-in-out infinite;overflow-x:hidden}
+    @keyframes bgShift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+
+    /* Corazones */
+    .hearts{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+    .heart{position:absolute;bottom:-40px;opacity:.8;filter:drop-shadow(0 6px 10px rgba(0,0,0,.25));animation:floatUp linear forwards}
+    @keyframes floatUp{to{transform:translateY(-110vh) rotate(360deg);opacity:0}}
+
+    .wrap{min-height:100%;display:grid;place-items:center;padding:24px;position:relative;z-index:1}
+    .card{width:min(720px,92vw);background:var(--card);color:var(--text);border-radius:24px;padding:28px 26px;box-shadow:0 20px 50px rgba(0,0,0,.35);position:relative;overflow:hidden}
+    .badge{position:absolute;right:16px;top:16px;background:var(--accent);color:#fff;padding:6px 12px;border-radius:999px;font-weight:700;letter-spacing:.4px}
+    h1{margin:.2em 0 .15em;font-size:clamp(28px,5vw,42px);line-height:1.1}
+    p{font-size:clamp(15px,2.5vw,18px);line-height:1.6;margin:.5em 0}
+    .tagline{font-size:clamp(16px,2.8vw,20px);color:#333;margin-bottom:12px}
+    .big{font-size:clamp(22px,4.8vw,28px);font-weight:700;color:var(--accent)}
+
+    /* Galería en cuadrícula (3x3 en desktop, 2xN en móvil) */
+    .gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:12px 0}
+    .gallery img{width:100%;border-radius:16px;border:2px solid #ff99aa;box-shadow:0 6px 12px rgba(0,0,0,.2);transition:transform .3s,box-shadow .3s;object-fit:cover;height:200px}
+    .gallery img:hover{transform:scale(1.05);box-shadow:0 8px 20px rgba(255,51,102,.5)}
+
+    .letter{background:#fff;border-radius:18px;border:1px dashed #f2a;padding:18px;margin-top:10px}
+    .btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+    .btn{appearance:none;border:none;cursor:pointer;border-radius:999px;padding:12px 16px;font-weight:700}
+    .btn.primary{background:var(--accent);color:#fff}
+    .btn.ghost{background:#fff;color:var(--accent);border:2px solid var(--accent)}
+    .footer{margin-top:18px;font-size:13px;color:#666;text-align:center}
+
+    /* Overlay para iniciar música en móviles */
+    .overlay{position:fixed;inset:0;display:grid;place-items:center;background:rgba(0,0,0,.55);backdrop-filter:blur(2px);z-index:9}
+    .overlay .panel{background:#fff;border-radius:18px;padding:18px 20px;color:#111;text-align:center;max-width:90vw;box-shadow:0 10px 30px rgba(0,0,0,.35)}
+    .overlay .panel .cta{margin-top:10px;background:var(--accent);color:#fff;border:none;border-radius:999px;padding:12px 18px;font-weight:800}
+
+    @media (max-width:600px){.gallery{grid-template-columns:repeat(2,1fr)}.gallery img{height:140px}}
+  </style>
+</head>
+<body>
+  <div class="hearts" id="hearts"></div>
+
+  <!-- Overlay para cumplir políticas móviles: primer toque inicia audio -->
+  <div class="overlay" id="overlay">
+    <div class="panel">
+      <div style="font-size:26px">💖</div>
+      <h3 style="margin:.4em 0">Para el amor de mi vida</h3>
+      <p> Toca el botón para comenzar. Activaremos la música y la magia ✨</p>
+      <button class="cta" id="startBtn">Empezar</button>
+    </div>
+  </div>
+
+  <main class="wrap">
+    <section class="card">
+      <span class="badge">4 meses 💘</span>
+      <h1>Feliz 4to mesversario, <span class="big" id="nombre">mi amor</span> 🥰</h1>
+      <p class="tagline">Hoy celebramos <strong>nuestros primeros 4 meses</strong> juntos y quiero decirte, de una forma sencilla pero sincera, lo mucho que <strong>te amo</strong>.</p>
+
+      <!-- Galería -->
+      <div class="gallery">
+        <img src="foto1.jpg" alt="Foto 1">
+        <img src="foto2.jpg" alt="Foto 2">
+        <img src="foto3.jpg" alt="Foto 3">
+        <img src="foto4.jpg" alt="Foto 4">
+        <img src="foto5.jpg" alt="Foto 5">
+        <img src="foto6.jpg" alt="Foto 6">
+      </div>
+
+      <div class="letter" id="carta">
+        <h2>Para: <span id="para">[Tu novia]</span> | De: <span id="de">[Tu nombre]</span></h2>
+        <p>Amor, hoy <span id="fecha">[fecha de hoy]</span> cumplimos <strong>4 meses</strong> y mi corazón está lleno de gratitud por ti. Gracias por cada mensaje, cada abrazo, cada risa y cada momento que hemos vivido. Eres mi persona favorita y mi lugar seguro.</p>
+        <p>Quiero que sepas que <strong>te amo demasiado</strong>, que me haces mejor y que quiero seguir construyendo contigo: recuerdos, planes y un futuro precioso. 💖</p>
+        <p>Con todo mi amor,<br> <span id="firma">[Tu nombre]</span></p>
+      </div>
+
+      <div class="btns">
+        <button class="btn primary" id="btnConfeti">¡Toca para corazones!</button>
+        <button class="btn ghost" id="btnEditar">Personalizar nombres/fecha</button>
+        <button class="btn ghost" id="btnContador">💞 Ver contador</button>
+      </div>
+
+      <div id="contador" class="footer hidden"></div>
+      <!-- Audio sin controles; se iniciará tras el primer toque -->
+      <audio id="musica" src="musica.mp3" loop preload="auto"></audio>
+      <p class="footer">Instálame como app: menú → «Añadir a la pantalla de inicio». Hecho con ♥</p>
+    </section>
+  </main>
+
+  <script>
+    const $ = (s,root=document)=>root.querySelector(s);
+    const hearts = $('#hearts');
+    function random(min,max){return Math.random()*(max-min)+min}
+    function throwHearts(count=20){
+      for(let i=0;i<count;i++){
+        const span = document.createElement('span');
+        span.className='heart'; span.textContent='❤';
+        const size = random(14,36);
+        span.style.left = random(0,100)+'vw';
+        span.style.fontSize = size+'px';
+        span.style.animationDuration = random(4,8)+'s';
+        span.style.color = Math.random()>.4 ? getComputedStyle(document.documentElement).getPropertyValue('--accent') : '#ff8fab';
+        hearts.appendChild(span); setTimeout(()=>span.remove(),9000);
+      }
+    }
+
+    function editar(){
+      const nombre = prompt('¿Cómo se llama tu novia?', $('#nombre').textContent) || $('#nombre').textContent;
+      const para = prompt('Para:', $('#para').textContent) || $('#para').textContent;
+      const de = prompt('De:', $('#de').textContent) || $('#de').textContent;
+      const fecha = prompt('Fecha:', new Date().toLocaleDateString('es-EC',{day:'2-digit',month:'long',year:'numeric'})) || $('#fecha').textContent;
+      $('#nombre').textContent = nombre; $('#para').textContent = para; $('#de').textContent = de; $('#firma').textContent = de; $('#fecha').textContent = fecha; throwHearts(12);
+    }
+
+    $('#btnConfeti').addEventListener('click',()=>throwHearts(28));
+    $('#btnEditar').addEventListener('click',editar);
+
+    // Contador
+    const fechaInicio = new Date('2025-07-11'); // 👈 Cambia por su fecha real AAAA-MM-DD
+    function actualizarContador(){
+      const ahora = new Date();
+      const diff = ahora - fechaInicio;
+      const dias = Math.floor(diff/(1000*60*60*24));
+      const horas = Math.floor((diff/(1000*60*60))%24);
+      const mins = Math.floor((diff/(1000*60))%60);
+      $('#contador').innerHTML = `Llevamos juntos <strong>${dias}</strong> días, <strong>${horas}</strong> horas y <strong>${mins}</strong> minutos 💞`;
+    }
+    $('#btnContador').addEventListener('click',()=>{const c=$('#contador');c.classList.toggle('hidden');if(!c.classList.contains('hidden')){actualizarContador();setInterval(actualizarContador,60000);}});
+
+    // Overlay: primer toque inicia música (requisito móvil)
+    const musica = $('#musica');
+    $('#startBtn').addEventListener('click', async ()=>{
+      try{ await musica.play(); }catch(e){ /* si falla, usuario debe tocar otra vez */ }
+      $('#overlay').style.display='none';
+      setTimeout(()=>throwHearts(18),400);
+    });
+
+    // PWA: registra Service Worker si existe
+    if('serviceWorker' in navigator){
+      window.addEventListener('load',()=>{
+        navigator.serviceWorker.register('./service-worker.js').catch(()=>{});
+      });
+    }
+  </script>
+</body>
+</html>
